@@ -1,1 +1,168 @@
-this is for urdf
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="drone">
+
+  <xacro:property name="PI" value="3.14159"/>
+  <xacro:property name="effort" value="30.0"/>
+  <xacro:property name="velocity" value="10.0"/>
+
+  <link name="world"/>
+
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://drone_description/meshes/frame.STL" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="virtual_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+
+  <link name="cover_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://drone_description/meshes/cover.STL" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="joint1" type="fixed">
+    <parent link="base_link"/>
+    <child link="cover_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+
+  <link name="base_motor1">
+    <visual>
+      <origin rpy="0 0 ${PI/4}" xyz="0.00207 0.00207 0.194"/>
+      <geometry>
+        <mesh filename="package://drone_description/meshes/base_motor.STL" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="base_motor2">
+    <visual>
+      <origin rpy="0 0 ${3*PI/4}" xyz="-0.00207 0.00207 0.194"/>
+      <geometry>
+        <mesh filename="package://drone_description/meshes/base_motor.STL" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="base_motor3">
+    <visual>
+      <origin rpy="0 0 ${5*PI/4}" xyz="-0.00207 -0.00207 0.194"/>
+      <geometry>
+        <mesh filename="package://drone_description/meshes/base_motor.STL" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="base_motor4">
+    <visual>
+      <origin rpy="0 0 ${7*PI/4}" xyz="0.00207 -0.00207 0.194"/>
+      <geometry>
+        <mesh filename="package://drone_description/meshes/base_motor.STL" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="joint_motor1" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_motor1"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+
+  <joint name="joint_motor2" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_motor2"/>
+    <origin rpy="0 0 0" xyz="-0 0 0"/>
+  </joint>
+
+  <joint name="joint_motor3" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_motor3"/>
+    <origin rpy="0 0 0" xyz="-0 -0 0"/>
+  </joint>
+
+  <joint name="joint_motor4" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_motor4"/>
+    <origin rpy="0 0 0" xyz="0 -0 0"/>
+  </joint>
+
+  <link name="base_fan1">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.03 0.03 0.154"/>
+      <geometry>
+        <mesh filename="package://drone_description/meshes/PropRight.STL" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="base_fan2">
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.03 0.03 0.154"/>
+      <geometry>
+        <mesh filename="package://drone_description/meshes/PropRight.STL" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="base_fan3">
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.03 -0.03 0.154"/>
+      <geometry>
+        <mesh filename="package://drone_description/meshes/PropRight.STL" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="base_fan4">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.03 -0.03 0.154"/>
+      <geometry>
+        <mesh filename="package://drone_description/meshes/PropRight.STL" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="motor1" type="revolute">
+    <parent link="base_motor1"/>
+    <child link="base_fan1"/>
+    <origin rpy="0 0 0" xyz="0.3 0.3 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="0" upper="${2*PI}" effort="${effort}" velocity="${velocity}"/>
+  </joint>
+
+  <joint name="motor2" type="revolute">
+    <parent link="base_motor2"/>
+    <child link="base_fan2"/>
+    <origin rpy="0 0 0" xyz="-0.3 0.3 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="0" upper="${2*PI}" effort="${effort}" velocity="${velocity}"/>
+  </joint>
+
+  <joint name="motor3" type="revolute">
+    <parent link="base_motor3"/>
+    <child link="base_fan3"/>
+    <origin rpy="0 0 0" xyz="-0.3 -0.3 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="0" upper="${2*PI}" effort="${effort}" velocity="${velocity}"/>
+  </joint>
+
+  <joint name="motor4" type="revolute">
+    <parent link="base_motor4"/>
+    <child link="base_fan4"/>
+    <origin rpy="0 0 0" xyz="0.3 -0.3 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="0" upper="${2*PI}" effort="${effort}" velocity="${velocity}"/>
+  </joint>
+
+</robot>
