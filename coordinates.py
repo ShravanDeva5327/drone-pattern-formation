@@ -3,7 +3,7 @@
 # This script processes an image to determine optimal drone positions for a drone show display.
 
 # The algorithm first detects the edges within the image, subsequently dividing it into 10x10 pixel blocks.
-# If a block contains more than 8 white pixels, the center of that block is designated as a drone position.
+# If a block contains more than 8 edge pixels, the center of that block is designated as a drone position.
 # To prevent drones from being positioned too closely to one another, adjacent blocks are marked to be excluded from further consideration.
 # The number of required drone positions is printed to the terminal.
 
@@ -49,7 +49,7 @@ print(f"Number of drone positions: {len(drone_coordinates)}")
 # Visualize drone positions on the output image
 output_img = np.zeros((height, width), np.uint8)
 for coord in drone_coordinates:
-    cv.circle(output_img, coord, block_size // 2, 255, -1)  # Mark the drone positions
+    cv.circle(output_img, coord, block_size // 2, 255, -1)
 
 cv.imshow('Drone Positions', output_img)
 cv.waitKey(0)
