@@ -11,8 +11,8 @@ import cv2 as cv
 import numpy as np
 
 # Load the image
-img = cv.imread('Images/logo175.jpg')
-cv.imshow('logo', img)
+img = cv.imread("Images/logo175.jpg")
+cv.imshow("logo", img)
 
 # Perform edge detection using the Canny method
 edges = cv.Canny(img, 100, 200)
@@ -31,7 +31,7 @@ for x in range(0, height, block_size):
         block_x, block_y = x // block_size, y // block_size
         if check[block_x, block_y]:
             # Check if the block contains atleast 5 edge pixels
-            block = edges[x:x+block_size, y:y+block_size]
+            block = edges[x : x + block_size, y : y + block_size]
             if np.sum(block == 255) >= 5:
                 # Determine the center of the block for drone placement
                 center_x = x + block_size // 2
@@ -51,6 +51,6 @@ output_img = np.zeros((height, width), np.uint8)
 for coord in drone_coordinates:
     cv.circle(output_img, coord, block_size, 255, -1)
 
-cv.imshow('Drone Positions', output_img)
+cv.imshow("Drone Positions", output_img)
 cv.waitKey(0)
 cv.destroyAllWindows()
