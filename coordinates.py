@@ -12,7 +12,6 @@ import numpy as np
 
 # Load the image
 img = cv.imread("Images/logo175.jpg")
-cv.imshow("logo", img)
 
 # Perform edge detection using the Canny method
 edges = cv.Canny(img, 100, 200)
@@ -51,6 +50,8 @@ output_img = np.zeros((height, width), np.uint8)
 for coord in drone_coordinates:
     cv.circle(output_img, coord, block_size, 255, -1)
 
-cv.imshow("Drone Positions", output_img)
-cv.waitKey(0)
-cv.destroyAllWindows()
+if __name__ == "__main__":
+    cv.imshow("logo", img)
+    cv.imshow("Drone Positions", output_img)
+    cv.waitKey(0)
+    cv.destroyAllWindows()
