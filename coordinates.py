@@ -11,7 +11,8 @@ import cv2 as cv
 import numpy as np
 
 # Load the image
-img = cv.imread("Images/logo175.jpg")
+img_ = cv.imread("Images/logo175.jpg")
+img = cv.flip(img_, 0)
 
 # Perform edge detection using the Canny method
 edges = cv.Canny(img, 100, 200)
